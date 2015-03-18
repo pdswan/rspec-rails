@@ -2,10 +2,7 @@ require "spec_helper"
 
 module RSpec::Rails
   describe HelperExampleGroup do
-    module ::FoosHelper
-      class InternalClass
-      end
-    end
+    module ::FoosHelper; end
 
     subject { HelperExampleGroup }
 
@@ -46,32 +43,6 @@ module RSpec::Rails
           end
         end
         expect(group.new.helper).to be_kind_of(ApplicationHelper)
-      end
-    end
-  end
-
-  describe HelperExampleGroup::ClassMethods do
-    describe "determine_default_helper_class" do
-      let(:group) do
-        RSpec::Core::ExampleGroup.describe do
-          include HelperExampleGroup
-        end
-      end
-
-      context "the described is a module" do
-        it "returns the module" do
-          allow(group).to receive(:described_class) { FoosHelper }
-          expect(group.determine_default_helper_class("ignore this")).
-            to eq(FoosHelper)
-        end
-      end
-
-      context "the described is a class" do
-        it "returns nil" do
-          allow(group).to receive(:described_class) { FoosHelper::InternalClass }
-          expect(group.determine_default_helper_class("ignore this")).
-            to be_nil
-        end
       end
     end
   end

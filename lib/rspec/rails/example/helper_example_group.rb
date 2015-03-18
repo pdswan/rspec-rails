@@ -9,20 +9,6 @@ module RSpec
       include ActionView::TestCase::Behavior
       include RSpec::Rails::ViewAssigns
 
-      # @private
-      module ClassMethods
-        if ::Rails::VERSION::MAJOR > 3
-          def determine_constant_from_test_name(_ignore)
-            described_class if yield(described_class)
-          end
-        else
-          def determine_default_helper_class(_ignore)
-            return unless Module === described_class && !(Class === described_class)
-            described_class
-          end
-        end
-      end
-
       # Returns an instance of ActionView::Base with the helper being specified
       # mixed in, along with any of the built-in rails helpers.
       def helper
